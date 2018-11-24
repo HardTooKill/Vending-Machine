@@ -51,8 +51,30 @@ namespace VendingMachine.Tests
             vm.Vend("Sprite", false);
 
             Assert.IsTrue(vm._totalcans== 98,"Total Can Number is wrong");
+            Assert.IsTrue(vm._totalsoldcans == 2, "Total Can sold is wrong");
+            Assert.IsTrue(vm.GetTotalCans() == 98, "Total Can sold is wrong");
             Assert.IsTrue(vm._totalcash == 1.2D,"Total cash is wrong");
             Assert.IsTrue(vm._totalcredit == 1.2D, "Total credit is wrong");
+        }
+        [TestMethod]
+        public void TestReset()
+        {
+            Models.VendingMachine vm = new Models.VendingMachine();
+            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 5);
+            Assert.AreEqual(100, vm._totalcans);
+
+            vm.Vend("Coke", true);
+            vm.Vend("Sprite", false);
+
+            Assert.IsTrue(vm._totalcans == 98, "Total Can Number is wrong");
+            Assert.IsTrue(vm._totalcash == 1.2D, "Total cash is wrong");
+            Assert.IsTrue(vm._totalcredit == 1.2D, "Total credit is wrong");
+
+            vm.Reset();
+            Assert.IsTrue(vm._totalcans == 98, "Total Can Number is wrong");
+            Assert.IsTrue(vm._totalcash == 0D, "Total cash is wrong");
+            Assert.IsTrue(vm._totalcredit == 0D, "Total credit is wrong");
+            Assert.IsTrue(vm._totalsoldcans == 0, "Total can sold is wrong");
         }
     }
 }

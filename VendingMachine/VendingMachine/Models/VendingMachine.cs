@@ -50,8 +50,9 @@ namespace VendingMachine.Models
                     else
                         _totalcredit += Convert.ToDouble(canCollectiontable.Rows[i][1].ToString());
 
-                    canCollectiontable.Rows[i][0] = Convert.ToInt32(canCollectiontable.Rows[i][2].ToString()) - 1;
+                    canCollectiontable.Rows[i][2] = Convert.ToInt32(canCollectiontable.Rows[i][2].ToString()) - 1;
                     _totalcans--;
+                    _totalsoldcans++;
                     return;
                 }
             }
@@ -148,7 +149,7 @@ namespace VendingMachine.Models
         /// 
         /// </summary>
         /// <returns></returns>
-        private int GetTotalCans()
+        public int GetTotalCans()
         {
             int total = 0;
 
