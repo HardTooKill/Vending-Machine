@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<VendingMachine.ViewModels.CanViewModel>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -14,9 +11,6 @@
         <th>
             @Html.DisplayNameFor(model => model.amount)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SelectedPayment)
-        </th>
         <th></th>
     </tr>
 
@@ -27,17 +21,13 @@
                 @Html.DisplayFor(modelItem => item.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.value)
+              $  @Html.DisplayFor(modelItem => item.value)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.amount)
             </td>
             <td>
-                @Html.RadioButtonFor(m => item.SelectedPayment, "CreditCard", new { Name = item.name, id = item.name }) Credit Card
-                @Html.RadioButtonFor(m => item.SelectedPayment, "Cash", new { Name = item.name, id = item.name }) Cash
-            </td>
-            <td>
-                @Html.ActionLink("Vend", "Vend","Home", new { name = item.name, selectedPayment = item.SelectedPayment },null) 
+                @Html.ActionLink("Vend", "Vend","Home", new { name = item.name},null) 
 
             </td>
         </tr>

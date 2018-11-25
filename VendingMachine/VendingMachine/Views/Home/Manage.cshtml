@@ -40,35 +40,36 @@
     </dl>
 </div>
 
-
-
-
-
 <table class="table">
     <tr>
         <th>
-           Flavor
+            Flavor
         </th>
         <th>
-           Price
+            Price
         </th>
         <th>
-           Amount
+            Amount
         </th>
     </tr>
 
-@foreach (var item in Model.CanList) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.value)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.amount)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.CanList)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.amount)
+            </td>
+        </tr>
+    }
 
 </table>
+
+<p>
+    @Html.ActionLink("Restock", "Restock")
+</p>

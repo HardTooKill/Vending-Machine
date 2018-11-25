@@ -61,7 +61,12 @@ namespace VendingMachine.Models
         /// <param name="amount"></param>
         public bool Restock(string name, int amount)
         {
-            return VendingMachine.Restock(name,amount);
+            if (VendingMachine.Restock(name, amount))
+            {
+                VendingMachine.Reset();
+                return true;
+            }
+            return false;
         }
 
         /// <summary>

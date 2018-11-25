@@ -20,7 +20,6 @@ namespace VendingMachine.Models
         /// </summary>
         public static void Reset()
         {
-            canList = new List<Can>();
             _totalcash = 0;
             _totalcans = GetTotalCans();
             _totalcredit = 0;

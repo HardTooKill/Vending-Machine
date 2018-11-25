@@ -9,8 +9,11 @@ namespace VendingMachine.ViewModels
 {
     public class CanViewModel
     {
+        [DisplayName("Flavor")]
         public string name { get; set; }
+        [DisplayName("Price")]
         public double value { get; set; }
+        [DisplayName("Amount")]
         public int amount { get; set; }
         public string SelectedPayment { get; set; }
 

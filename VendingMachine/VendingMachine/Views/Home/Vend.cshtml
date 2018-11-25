@@ -1,44 +1,57 @@
-﻿@model VendingMachine.ViewModels.VendingMachineViewModel
+﻿@model VendingMachine.ViewModels.CanViewModel
+
+<h4>Vending</h4>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+         
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.value, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               $ @Html.DisplayFor(model => model.value, new { htmlAttributes = new { @class = "form-control" } })
+             
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+               
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SelectedPayment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.SelectedPayment, "CreditCard" ) Credit Card
+                @Html.RadioButtonFor(model => model.SelectedPayment, "Cash") Cash
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Vend" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
 
 <div>
-    <h4>VendingMachineViewModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalCash)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalCash)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Totalcredit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Totalcredit)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TotalSoldcans)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TotalSoldcans)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Totalcans)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Totalcans)
-        </dd>
-
-    </dl>
+    @Html.ActionLink("Back", "Index")
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

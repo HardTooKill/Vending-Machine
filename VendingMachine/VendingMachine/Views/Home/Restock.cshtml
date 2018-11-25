@@ -1,0 +1,38 @@
+﻿@model IList<VendingMachine.ViewModels.CanViewModel>
+
+<h4>Restock</h4>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<table class="table">
+    <tr>
+        <th>
+            Flavor
+        </th>
+        <th>
+            Amount
+        </th>
+        <th></th>
+    </tr>
+
+    @for (var i = 0; i< Model.Count(); i++)
+    {
+        <tr>
+            <td>
+                @Html.LabelFor(modelItem => modelItem[i].name)
+                @Html.HiddenFor(modelItem => modelItem[i].name)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => modelItem[i].amount)
+            </td>
+        </tr>
+    }
+
+</table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Restock" class="btn btn-default" />
+        </div>
+    </div>
+}

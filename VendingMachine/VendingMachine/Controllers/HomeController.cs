@@ -15,12 +15,6 @@ namespace VendingMachine.Controllers
             this.service = service;
         }
 
-        public HomeController()
-        {
-            //  this.service = new Models.VendingMachine();
-           
-        }
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -38,12 +32,31 @@ namespace VendingMachine.Controllers
         }
 
         [HttpGet]
-        public ActionResult Vend(string name, string selectedpayment)
+        public ActionResult Vend(string name)
         {
-            service.Vend(name, selectedpayment.Equals("Cash"));
+            var canlist = service.GetCansList();
+            ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
+            foreach (var can in canlist)
+            {
+                if(can.name.Equals(name))
+                {
+                    cvm.name = can.name;
+                    cvm.value = can.value;
+                    cvm.SelectedPayment = "Cash";
+                }
+            }
+
+            return View(cvm);
+        }
+
+        [HttpPost]
+        public ActionResult Vend(ViewModels.CanViewModel vm)
+        {
+
+            service.Vend(vm.name, vm.SelectedPayment.Equals("Cash"));
 
             List<ViewModels.CanViewModel> list = new List<ViewModels.CanViewModel>();
-            foreach (Models.Can can in Models.VendingMachine.canList)
+            foreach (Models.Can can in service.GetCansList())
             {
                 ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
                 cvm.amount = can.amount;
@@ -52,8 +65,9 @@ namespace VendingMachine.Controllers
                 cvm.SelectedPayment = "Cash";
                 list.Add(cvm);
             }
-            return View("Index", list);
+            return View("Index",list);
         }
+
         public ActionResult Manage()
         {
             ViewModels.VendingMachineViewModel vm = new ViewModels.VendingMachineViewModel();
@@ -77,18 +91,39 @@ namespace VendingMachine.Controllers
             return View(vm);
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Restock()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            List<ViewModels.CanViewModel> list = new List<ViewModels.CanViewModel>();
+            foreach (Models.Can can in service.GetCansList())
+            {
+                ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
+                cvm.amount = can.amount;
+                cvm.name = can.name;
+                list.Add(cvm);
+            }
+            return View(list);
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Restock(IEnumerable<ViewModels.CanViewModel> canlist)
         {
-            ViewBag.Message = "Your contact page.";
+            
+            foreach (var can in canlist)
+            {
+                
+                service.Restock(can.name, can.amount);
+            }
+            List<ViewModels.CanViewModel> list = new List<ViewModels.CanViewModel>();
+            foreach (Models.Can can in service.GetCansList())
+            {
+                ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
+                cvm.amount = can.amount;
+                cvm.name = can.name;
+                list.Add(cvm);
+            }
 
-            return View();
+            return View("Restock", list);
         }
     }
 }
