@@ -13,7 +13,7 @@ namespace VendingMachine.Models
         public double _totalsoldcans;
         public double _totalcans;
 
-        public DataTable canCollectiontable;
+        public List<Can> canList;
 
 
         /// <summary>
@@ -41,16 +41,16 @@ namespace VendingMachine.Models
         /// <param name="isCash"></param>
         public void Vend(string name, bool isCash)
         {
-            for (int i = 0; i < canCollectiontable.Rows.Count; i++)
+            foreach (Can c in canList)
             {
-                if (canCollectiontable.Rows[i][0].Equals(name))
+                if (c.name.Equals(name))
                 {
                     if (isCash)
-                        _totalcash += Convert.ToDouble(canCollectiontable.Rows[i][1].ToString());
+                        _totalcash += c.value;
                     else
-                        _totalcredit += Convert.ToDouble(canCollectiontable.Rows[i][1].ToString());
+                        _totalcredit += c.value;
 
-                    canCollectiontable.Rows[i][2] = Convert.ToInt32(canCollectiontable.Rows[i][2].ToString()) - 1;
+                    c.amount = c.amount - 1;
                     _totalcans--;
                     _totalsoldcans++;
                     return;
@@ -66,15 +66,15 @@ namespace VendingMachine.Models
         public void AddNewCan(string name, double value, int amount)
         {
 
-            if (canCollectiontable.Rows.Count == 10)
+            if (canList.Count == 10)
                 throw new Exception("Cannot add more flavors");
 
-            DataRow dr = canCollectiontable.NewRow();
-            dr[0] = name;
-            dr[1] = value;
-            dr[2] = amount;
+            Can newcan = new Can();
+            newcan.name = name;
+            newcan.value = value;
+            newcan.amount = amount;
 
-            canCollectiontable.Rows.Add(dr);
+            canList.Add(newcan);
             _totalcans += amount;
         }
 
@@ -85,11 +85,11 @@ namespace VendingMachine.Models
         /// <param name="amount"></param>
         public bool Restock(string name, int amount)
         {
-            for (int i = 0; i < canCollectiontable.Rows.Count; i++)
+            foreach (Can c in canList)
             {
-                if (canCollectiontable.Rows[i][0].ToString().Equals(name))
+                if (c.name.Equals(name))
                 {
-                    canCollectiontable.Rows[i][2] = amount;
+                    c.amount = amount;
                     _totalcans = GetTotalCans();
                     return true;
                 }
@@ -103,46 +103,41 @@ namespace VendingMachine.Models
         /// </summary>
         private void Initialization()
         {
-            //by design, all can's details are stored in a data table with 3 columns
-            // column 1: name
-            // column 2: value
-            // column 3: amount
+            //by design, all can's details are stored in a list with Class type Can
             // for deomo assume that all can's names are unique name
-            canCollectiontable = new DataTable();
-            canCollectiontable.Columns.Add("name");
-            canCollectiontable.Columns.Add("value");
-            canCollectiontable.Columns.Add("amount");
+            canList = new List<Can>();
 
             //add 5 different cans for starting
-            DataRow dr1 = canCollectiontable.NewRow();
-            dr1[0] = "Coke";
-            dr1[1] = "1.2";
-            dr1[2] = 20;
-            canCollectiontable.Rows.Add(dr1);
+            Can can1 = new Can();
+            can1.name = "Coke";
+            can1.value = 1.2d;
+            can1.amount = 20;
+            canList.Add(can1);
 
-            DataRow dr2 = canCollectiontable.NewRow();
-            dr2[0] = "Sprite";
-            dr2[1] = "1.2";
-            dr2[2] = 20;
-            canCollectiontable.Rows.Add(dr2);
 
-            DataRow dr3 = canCollectiontable.NewRow();
-            dr3[0] = "Fanta";
-            dr3[1] = "1.2";
-            dr3[2] = 20;
-            canCollectiontable.Rows.Add(dr3);
+            Can can2 = new Can();
+            can2.name = "Sprite";
+            can2.value = 1.2d;
+            can2.amount = 20;
+            canList.Add(can2);
 
-            DataRow dr4 = canCollectiontable.NewRow();
-            dr4[0] = "Pepsi";
-            dr4[1] = "1.1";
-            dr4[2] = 20;
-            canCollectiontable.Rows.Add(dr4);
+            Can can3 = new Can();
+            can3.name = "Fanta";
+            can3.value = 1.2d;
+            can3.amount = 20;
+            canList.Add(can3);
 
-            DataRow dr5 = canCollectiontable.NewRow();
-            dr5[0] = "7up";
-            dr5[1] = "1.1";
-            dr5[2] = 20;
-            canCollectiontable.Rows.Add(dr5);
+            Can can4 = new Can();
+            can4.name = "Pepsi";
+            can4.value = 1.1d;
+            can4.amount = 20;
+            canList.Add(can4);
+
+            Can can5 = new Can();
+            can5.name = "7up";
+            can5.value = 1.1d;
+            can5.amount = 20;
+            canList.Add(can5);
         }
 
         /// <summary>
@@ -153,9 +148,9 @@ namespace VendingMachine.Models
         {
             int total = 0;
 
-            for (int i = 0; i < canCollectiontable.Rows.Count; i++)
+            foreach (Can c in canList)
             {
-                total += Convert.ToInt32(canCollectiontable.Rows[i][2].ToString());
+                total += c.amount;
             }
             return total;
         }

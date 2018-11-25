@@ -11,7 +11,7 @@ namespace VendingMachine.Tests
         public void TestCansInitialization()
         {
             Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 5);
+            Assert.IsTrue(vm.canList.Count == 5);
             Assert.AreEqual(100, vm._totalcans);
         }
 
@@ -19,18 +19,18 @@ namespace VendingMachine.Tests
         public void TestAddnewCans()
         {
             Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 5);
+            Assert.IsTrue(vm.canList.Count == 5);
             Assert.AreEqual(100, vm._totalcans);
 
             vm.AddNewCan("Lift", 1.3, 50);
-            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 6);
+            Assert.IsTrue(vm.canList.Count == 6);
             Assert.AreEqual(150, vm._totalcans);
         }
         [TestMethod]
         public void TestRestock()
         {
             Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 5);
+            Assert.IsTrue(vm.canList.Count == 5);
             Assert.AreEqual(100, vm._totalcans);
 
             //no flavor in the machine should return false
@@ -44,7 +44,7 @@ namespace VendingMachine.Tests
         public void TestVend()
         {
             Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 5);
+            Assert.IsTrue(vm.canList.Count == 5);
             Assert.AreEqual(100, vm._totalcans);
 
             vm.Vend("Coke", true);
@@ -60,7 +60,7 @@ namespace VendingMachine.Tests
         public void TestReset()
         {
             Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canCollectiontable.Rows.Count == 5);
+            Assert.IsTrue(vm.canList.Count == 5);
             Assert.AreEqual(100, vm._totalcans);
 
             vm.Vend("Coke", true);
