@@ -20,7 +20,7 @@
     {
         <tr>
             <td>
-                @Html.LabelFor(modelItem => modelItem[i].name)
+                @Html.DisplayFor(modelItem => modelItem[i].name)
                 @Html.HiddenFor(modelItem => modelItem[i].name)
             </td>
             <td>
@@ -36,3 +36,6 @@
         </div>
     </div>
 }
+    <div>
+        @Html.ActionLink("Manage", "Manage")
+    </div>
