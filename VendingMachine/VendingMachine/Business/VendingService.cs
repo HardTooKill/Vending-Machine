@@ -14,11 +14,11 @@ namespace VendingMachine.Models
         {
             return VendingMachine._totalcredit;
         }
-        public double GetTotalSoldCans()
+        public int GetTotalSoldCans()
         {
             return VendingMachine._totalsoldcans;
         }
-        public double GetTotalCans()
+        public int GetTotalCans()
         {
             return VendingMachine._totalcans;
         }

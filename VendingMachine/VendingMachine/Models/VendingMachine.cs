@@ -10,8 +10,8 @@ namespace VendingMachine.Models
     {
         public static double _totalcash;
         public static double _totalcredit;
-        public static double _totalsoldcans;
-        public static double _totalcans;
+        public static int _totalsoldcans;
+        public static int _totalcans;
 
         public static List<Can> canList;
        

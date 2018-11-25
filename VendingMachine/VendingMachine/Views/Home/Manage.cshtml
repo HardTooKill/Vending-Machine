@@ -1,7 +1,8 @@
 ﻿@model VendingMachine.ViewModels.VendingMachineViewModel
 
+
 <div>
-    <h4>VendingMachineViewModel</h4>
+    <h4>Vending Machine Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -38,7 +39,36 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+           Flavor
+        </th>
+        <th>
+           Price
+        </th>
+        <th>
+           Amount
+        </th>
+    </tr>
+
+@foreach (var item in Model.CanList) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+    </tr>
+}
+
+</table>

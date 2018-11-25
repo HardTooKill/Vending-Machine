@@ -54,6 +54,28 @@ namespace VendingMachine.Controllers
             }
             return View("Index", list);
         }
+        public ActionResult Manage()
+        {
+            ViewModels.VendingMachineViewModel vm = new ViewModels.VendingMachineViewModel();
+            vm.Totalcans = service.GetTotalCans();
+            vm.TotalCash = service.GetTotalcash();
+            vm.Totalcredit = service.GetTotalCredit();
+            vm.TotalSoldcans = service.GetTotalSoldCans();
+
+            List<ViewModels.CanViewModel> list = new List<ViewModels.CanViewModel>();
+            foreach (Models.Can can in Models.VendingMachine.canList)
+            {
+                ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
+                cvm.amount = can.amount;
+                cvm.name = can.name;
+                cvm.value = can.value;
+                cvm.SelectedPayment = "Cash";
+                list.Add(cvm);
+            }
+            vm.CanList = list;
+
+            return View(vm);
+        }
 
         public ActionResult About()
         {
