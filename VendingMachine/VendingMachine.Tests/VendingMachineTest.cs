@@ -10,71 +10,77 @@ namespace VendingMachine.Tests
         [TestMethod]
         public void TestCansInitialization()
         {
-            Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canList.Count == 5);
-            Assert.AreEqual(100, vm._totalcans);
+            Models.VendingMachine.Reset();
+            Models.VendingMachine.Initialization();
+            Assert.IsTrue(Models.VendingMachine.canList.Count == 5);
+            Assert.AreEqual(100, Models.VendingMachine.GetTotalCans());
         }
 
         [TestMethod]
         public void TestAddnewCans()
         {
-            Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canList.Count == 5);
-            Assert.AreEqual(100, vm._totalcans);
+            Models.VendingMachine.Reset();
+            Models.VendingMachine.Initialization();
 
-            vm.AddNewCan("Lift", 1.3, 50);
-            Assert.IsTrue(vm.canList.Count == 6);
-            Assert.AreEqual(150, vm._totalcans);
+            Assert.IsTrue(Models.VendingMachine.canList.Count == 5);
+            Assert.AreEqual(100, Models.VendingMachine.GetTotalCans());
+
+            Models.VendingMachine.AddNewCan("Lift", 1.3, 50);
+            Assert.IsTrue(Models.VendingMachine.canList.Count == 6);
+            Assert.AreEqual(150, Models.VendingMachine.GetTotalCans());
         }
         [TestMethod]
         public void TestRestock()
         {
-            Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canList.Count == 5);
-            Assert.AreEqual(100, vm._totalcans);
+            Models.VendingMachine.Reset();
+            Models.VendingMachine.Initialization();
+            Assert.IsTrue(Models.VendingMachine.canList.Count == 5);
+            Assert.AreEqual(100, Models.VendingMachine.GetTotalCans());
 
             //no flavor in the machine should return false
-            Assert.IsFalse(vm.Restock("Lift", 50));
+            Assert.IsFalse(Models.VendingMachine.Restock("Lift", 50));
 
             //restock the Coke and check total cans after
-            Assert.IsTrue(vm.Restock("Coke", 30));
-            Assert.AreEqual(110, vm._totalcans);
+            Assert.IsTrue(Models.VendingMachine.Restock("Coke", 30));
+            Assert.AreEqual(110, Models.VendingMachine.GetTotalCans());
         }
         [TestMethod]
         public void TestVend()
         {
-            Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canList.Count == 5);
-            Assert.AreEqual(100, vm._totalcans);
+            Models.VendingMachine.Reset();
+            Models.VendingMachine.Initialization();
+            Assert.IsTrue(Models.VendingMachine.canList.Count == 5);
+            Assert.AreEqual(100, Models.VendingMachine.GetTotalCans());
 
-            vm.Vend("Coke", true);
-            vm.Vend("Sprite", false);
+            Models.VendingMachine.Vend("Coke", true);
+            Models.VendingMachine.Vend("Sprite", false);
 
-            Assert.IsTrue(vm._totalcans== 98,"Total Can Number is wrong");
-            Assert.IsTrue(vm._totalsoldcans == 2, "Total Can sold is wrong");
-            Assert.IsTrue(vm.GetTotalCans() == 98, "Total Can sold is wrong");
-            Assert.IsTrue(vm._totalcash == 1.2D,"Total cash is wrong");
-            Assert.IsTrue(vm._totalcredit == 1.2D, "Total credit is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcans== 98,"Total Can Number is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalsoldcans == 2, "Total Can sold is wrong");
+            Assert.IsTrue(Models.VendingMachine.GetTotalCans() == 98, "Total Can sold is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcash == 1.2D,"Total cash is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcredit == 1.2D, "Total credit is wrong");
         }
         [TestMethod]
         public void TestReset()
         {
-            Models.VendingMachine vm = new Models.VendingMachine();
-            Assert.IsTrue(vm.canList.Count == 5);
-            Assert.AreEqual(100, vm._totalcans);
+            Models.VendingMachine.Reset();
+            Models.VendingMachine.Initialization();
+            Assert.IsTrue(Models.VendingMachine.canList.Count == 5);
+            Assert.AreEqual(100, Models.VendingMachine.GetTotalCans());
 
-            vm.Vend("Coke", true);
-            vm.Vend("Sprite", false);
+            Models.VendingMachine.Vend("Coke", true);
+            Models.VendingMachine.Vend("Sprite", false);
 
-            Assert.IsTrue(vm._totalcans == 98, "Total Can Number is wrong");
-            Assert.IsTrue(vm._totalcash == 1.2D, "Total cash is wrong");
-            Assert.IsTrue(vm._totalcredit == 1.2D, "Total credit is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcans == 98, "Total Can Number is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcash == 1.2D, "Total cash is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcredit == 1.2D, "Total credit is wrong");
 
-            vm.Reset();
-            Assert.IsTrue(vm._totalcans == 98, "Total Can Number is wrong");
-            Assert.IsTrue(vm._totalcash == 0D, "Total cash is wrong");
-            Assert.IsTrue(vm._totalcredit == 0D, "Total credit is wrong");
-            Assert.IsTrue(vm._totalsoldcans == 0, "Total can sold is wrong");
+            Models.VendingMachine.Reset();
+            Assert.IsTrue(Models.VendingMachine._totalcans == 0, "Total Can Number is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcash == 0D, "Total cash is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalcredit == 0D, "Total credit is wrong");
+            Assert.IsTrue(Models.VendingMachine._totalsoldcans == 0, "Total can sold is wrong");
         }
     }
 }

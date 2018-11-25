@@ -8,9 +8,51 @@ namespace VendingMachine.Controllers
 {
     public class HomeController : Controller
     {
+        private Models.VendingService service;
+
+        public HomeController(Models.VendingService service)
+        {
+            this.service = service;
+        }
+
+        public HomeController()
+        {
+            //  this.service = new Models.VendingMachine();
+           
+        }
+
+        [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            List<ViewModels.CanViewModel> list = new List<ViewModels.CanViewModel>();
+            foreach (Models.Can can in service.GetCansList())
+            {
+                ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
+                cvm.amount = can.amount;
+                cvm.name = can.name;
+                cvm.value = can.value;
+                cvm.SelectedPayment = "Cash";
+                list.Add(cvm);
+            }
+            return View(list);
+        }
+
+        [HttpGet]
+        public ActionResult Vend(string name, string selectedpayment)
+        {
+            service.Vend(name, selectedpayment.Equals("Cash"));
+
+            List<ViewModels.CanViewModel> list = new List<ViewModels.CanViewModel>();
+            foreach (Models.Can can in Models.VendingMachine.canList)
+            {
+                ViewModels.CanViewModel cvm = new ViewModels.CanViewModel();
+                cvm.amount = can.amount;
+                cvm.name = can.name;
+                cvm.value = can.value;
+                cvm.SelectedPayment = "Cash";
+                list.Add(cvm);
+            }
+            return View("Index", list);
         }
 
         public ActionResult About()

@@ -6,29 +6,21 @@ using System.Data;
 
 namespace VendingMachine.Models
 {
-    public class VendingMachine
+    public static class VendingMachine
     {
-        public double _totalcash;
-        public double _totalcredit;
-        public double _totalsoldcans;
-        public double _totalcans;
+        public static double _totalcash;
+        public static double _totalcredit;
+        public static double _totalsoldcans;
+        public static double _totalcans;
 
-        public List<Can> canList;
-
-
-        /// <summary>
-        /// initialize all values
-        /// </summary>
-        public VendingMachine()
-        {
-            Initialization();
-            Reset();
-        }
+        public static List<Can> canList;
+       
         /// <summary>
         /// Reset vending machine
         /// </summary>
-        public void Reset()
+        public static void Reset()
         {
+            canList = new List<Can>();
             _totalcash = 0;
             _totalcans = GetTotalCans();
             _totalcredit = 0;
@@ -39,12 +31,13 @@ namespace VendingMachine.Models
         /// </summary>
         /// <param name="name"></param>
         /// <param name="isCash"></param>
-        public void Vend(string name, bool isCash)
+        public static void Vend(string name, bool isCash)
         {
             foreach (Can c in canList)
             {
                 if (c.name.Equals(name))
                 {
+                    if (c.amount == 0) return;
                     if (isCash)
                         _totalcash += c.value;
                     else
@@ -63,7 +56,7 @@ namespace VendingMachine.Models
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <param name="amount"></param>
-        public void AddNewCan(string name, double value, int amount)
+        public static void AddNewCan(string name, double value, int amount)
         {
 
             if (canList.Count == 10)
@@ -83,7 +76,7 @@ namespace VendingMachine.Models
         /// </summary>
         /// <param name="name"></param>
         /// <param name="amount"></param>
-        public bool Restock(string name, int amount)
+        public static bool Restock(string name, int amount)
         {
             foreach (Can c in canList)
             {
@@ -97,11 +90,10 @@ namespace VendingMachine.Models
             return false;
         }
 
-
         /// <summary>
         /// Add default stock of cans
         /// </summary>
-        private void Initialization()
+        public static void Initialization()
         {
             //by design, all can's details are stored in a list with Class type Can
             // for deomo assume that all can's names are unique name
@@ -138,13 +130,14 @@ namespace VendingMachine.Models
             can5.value = 1.1d;
             can5.amount = 20;
             canList.Add(can5);
+            _totalcans = GetTotalCans();
         }
 
         /// <summary>
-        /// 
+        /// Get total number of cans
         /// </summary>
         /// <returns></returns>
-        public int GetTotalCans()
+        public static int GetTotalCans()
         {
             int total = 0;
 
